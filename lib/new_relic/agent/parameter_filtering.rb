@@ -19,7 +19,7 @@ module NewRelic
 
       def apply_filters(env, params)
         if filters = env[ACTION_DISPATCH_PARAMETER_FILTER]
-          params = filter_using_rails(params, filters) 
+          params = filter_using_rails(params, filters)
         end
         params = filter_rack_file_data(env, params)
         params
@@ -27,6 +27,8 @@ module NewRelic
 
       def filter_using_rails(params, filters)
         return params if RAILS_FILTER_CLASS.nil?
+
+        puts "*"*50, "filter_using_rails", params.inspect, filters.inspect,"*"*50
 
         pre_filtered_params = filter_rails_request_parameters(params)
         RAILS_FILTER_CLASS.new(filters).filter(pre_filtered_params)

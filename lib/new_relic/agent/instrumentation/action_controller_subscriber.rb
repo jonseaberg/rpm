@@ -71,6 +71,9 @@ module NewRelic
         def format_metric_name(metric_action, controller_name)
           controller_class = ::NewRelic::LanguageSupport.constantize(controller_name)
           "Controller/#{controller_class.controller_path}/#{metric_action}"
+        rescue
+          puts "*"*50, metric_action, controller_name, "*"*50
+          "Controller/#{controller_name}/#{metric_action}"
         end
 
         def controller_class(payload)
